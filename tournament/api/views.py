@@ -1,11 +1,6 @@
 from rest_framework import viewsets
-from tournament.models import Tournament, Game
-from tournament.api.serializers import TournamentSerializer, GameSerializer
-
-
-class GameViewSet(viewsets.ViewSet):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer
+from tournament.models import Tournament
+from tournament.api.serializers import TournamentSerializer
 
 
 class TournamentViewSet(viewsets.ViewSet):
