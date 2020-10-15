@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
-from tournament.models import Tournament
+# from tournament.models import Tournament
 
 
 class Player(AbstractUser):
@@ -9,7 +9,7 @@ class Player(AbstractUser):
     balance = models.FloatField(default=0)
     revenue = models.FloatField(default=0)
     matches = models.IntegerField(default=0)
-    favorites = models.ManyToManyField(Tournament)
+    favorites = models.ManyToManyField('tournament.Tournament')
 
     REQUIRED_FIELDS = ['email']
 

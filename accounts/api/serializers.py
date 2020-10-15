@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-User = get_user_model()
+Player = get_user_model()
 
 
-class CustomUserDetailsSerializer(serializers.ModelSerializer):
+class CustomPlayerDetailsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
-        fields = ("id", "first_name", "last_name", "email")
+        model = Player
+        fields = ("url", "id", "first_name", "username", "email", "balance", "revenue", "matches", "favorites")

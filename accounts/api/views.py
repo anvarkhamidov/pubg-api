@@ -1,8 +1,11 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.contrib.auth import get_user_model
 from dj_rest_auth.registration.views import VerifyEmailView
 from django.utils.translation import ugettext_lazy as _
+
+Player = get_user_model()
 
 
 @api_view()
