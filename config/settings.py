@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'drf_yasg',
+
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
@@ -60,6 +62,7 @@ AUTH_USER_MODEL = 'accounts.Player'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
@@ -184,3 +187,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+LOGIN_URL = '/api/accounts/login'
+
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+      'Basic': {
+            'type': 'basic'
+      },
+   }
+}
