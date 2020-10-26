@@ -13,9 +13,7 @@ from accounts.models import Player
 class Prize(models.Model):
     name = models.CharField(max_length=100, help_text='The name of prize')
     icon = models.ImageField(default='default_prize.jpg')
-    price_per_kill = models.FloatField(blank=True, null=True, help_text='Price per kill')
-    winner_price = models.FloatField(blank=True, null=True, help_text='Price for winner at the end')
-    price_for_top_winners = models.FloatField(blank=True, null=True, help_text='Price for top players')
+    price = models.FloatField(blank=True, null=True, help_text='Price')
 
 
 class Tournament(models.Model):
