@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import DefaultConnectionProxy, models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 # from tournament.models import Tournament
@@ -9,6 +9,7 @@ class Player(AbstractUser):
     balance = models.FloatField(default=0)
     revenue = models.FloatField(default=0)
     matches = models.IntegerField(default=0)
+    image = models.ImageField(default='default_avatar.jpg')
     favorites = models.ManyToManyField('tournament.Tournament')
 
     REQUIRED_FIELDS = ['email']

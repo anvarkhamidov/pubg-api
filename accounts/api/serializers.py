@@ -7,4 +7,4 @@ Player = get_user_model()
 class CustomPlayerDetailsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Player
-        fields = ("url", "id", "first_name", "username", "email", "balance", "revenue", "matches", "favorites")
+        fields = ("url", "id", "first_name", "username", "email", "image", "balance", "revenue", "matches", "favorites")

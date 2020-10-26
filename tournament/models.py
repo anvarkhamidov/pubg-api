@@ -1,4 +1,5 @@
 # from django.contrib.auth import get_user_model
+from collections import defaultdict
 from django.db import models
 from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -11,7 +12,7 @@ from accounts.models import Player
 
 class Prize(models.Model):
     name = models.CharField(max_length=100, help_text='The name of prize')
-    # icon
+    icon = models.ImageField(default='default_prize.jpg')
     price_per_kill = models.FloatField(blank=True, null=True, help_text='Price per kill')
     winner_price = models.FloatField(blank=True, null=True, help_text='Price for winner at the end')
     price_for_top_winners = models.FloatField(blank=True, null=True, help_text='Price for top players')
@@ -20,6 +21,7 @@ class Prize(models.Model):
 class Tournament(models.Model):
     name = models.CharField(max_length=100, help_text='The public name of the tournament')
     slug = models.SlugField(max_length=100)
+    image = models.ImageField(default='default_tournament.jpg')
     description = models.TextField(help_text='Match info')
     instructions = models.TextField(help_text='Match Instructions')
     password = models.CharField(max_length=100, help_text='Password for tournament')
