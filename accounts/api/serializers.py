@@ -8,7 +8,7 @@ Player = get_user_model()
 class CustomPlayerDetailsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Player
-        fields = ("url", "id", "first_name", "username", "email", "image", "balance", "revenue", "matches")
+        fields = ("url", "id", "first_name", "username", "email", "image", "balance", "revenue", "matches", "background_image")
 
 
 class VerificationTokenSerializer(serializers.ModelSerializer):
