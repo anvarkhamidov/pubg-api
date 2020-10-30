@@ -10,6 +10,7 @@ urlpatterns = [
     path('password-reset/confirm/<str:uidb64>/<str:token>/', PasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
     path('password-reset/complete/', views.complete_view, name='password_reset_complete'),
+    path('verification-tokens/', views.ListVerificationTokens.as_view(), name='verification-tokens-list'),
 
     # Default urls
     path('', include('dj_rest_auth.urls')),

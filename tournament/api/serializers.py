@@ -16,12 +16,6 @@ class PrizeSerializer(serializers.HyperlinkedModelSerializer):
         fields = "__all__"
 
 
-class PlayerSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Player
-        fields = ("url", "id", "first_name", "username", "email", "balance", "revenue", "matches", "favorites")
-
-
 class TournamentSerializer(serializers.ModelSerializer):
     players = CustomPlayerDetailsSerializer(many=True, read_only=True)
     prizes = PrizeSerializer(many=True, read_only=True)

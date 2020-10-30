@@ -1,8 +1,11 @@
-from rest_framework import status
+from accounts.models import VerificationToken
+from accounts.api.serializers import VerificationTokenSerializer
+from rest_framework import status, permissions
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.contrib.auth import get_user_model
 from dj_rest_auth.registration.views import VerifyEmailView
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 Player = get_user_model()
@@ -28,3 +31,13 @@ class CustomVerifyEmailView(VerifyEmailView):
         confirmation = self.get_object()
         confirmation.confirm(self.request)
         return Response({'detail': _('ok')}, status=status.HTTP_200_OK)
+
+
+class ListVerificationTokens(APIView):
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+
+    def get(self, request):
+        token_list = VerificationToken.objects.all()
+        serializer = VerificationTokenSerializer(token_list, many=True)
+        return Response({'tokens': serializer.data})

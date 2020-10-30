@@ -1,15 +1,17 @@
 from django.urls import path, include
 from rest_framework import routers
-from tournament.api.views import TournamentViewSet, PremiumTournamentsViewSet, PrizeViewSet, PlayerViewSet, \
-    TicketViewSet
+from tournament.api import views
 
 router = routers.DefaultRouter()
-router.register('tournament/premium', PremiumTournamentsViewSet, 'premium')
-router.register('tournament', TournamentViewSet, 'tournament')
-router.register('player', PlayerViewSet, 'player')
-router.register('prize', PrizeViewSet)
-router.register('ticket', TicketViewSet)
+router.register('tournament/premium', views.PremiumTournamentsViewSet, 'premium')
+router.register('tournament/today', views.TodayTournamentViewSet, 'today-tournament')
+router.register('tournament/upcoming', views.UpcomingTournamentViewSet, 'upcoming-tournament')
+router.register('tournament', views.TournamentViewSet, 'tournament')
+router.register('player', views.PlayerViewSet, 'player')
+router.register('prize', views.PrizeViewSet)
+router.register('ticket', views.TicketViewSet)
 
 urlpatterns = [
+    path('ticket/buy/<int:id>/', views.BuyTicketView.as_view()),
     path('', include(router.urls)),
 ]

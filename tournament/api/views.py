@@ -1,8 +1,14 @@
+from django.utils import timezone
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, request
+from rest_framework.response import Response
+from rest_framework import viewsets
 
+from datetime import datetime, date, timedelta, time
+
+from accounts.api.serializers import CustomPlayerDetailsSerializer
+from config.views import APIViewMixin
 from tournament.models import Tournament, Prize, Ticket
-from tournament.api.serializers import TournamentSerializer, PrizeSerializer, PlayerSerializer, TicketSerializer
+from tournament.api.serializers import TournamentSerializer, PrizeSerializer, TicketSerializer
 
 Player = get_user_model()
 
@@ -22,6 +28,18 @@ class PremiumTournamentsViewSet(viewsets.ModelViewSet):
     serializer_class = TournamentSerializer
 
 
+class TodayTournamentViewSet(viewsets.ModelViewSet):
+    date = datetime.combine(timezone.now(), time.min)
+    queryset = Tournament.objects.filter(starts_at__date=date).all()
+    serializer_class = TournamentSerializer
+
+
+class UpcomingTournamentViewSet(viewsets.ModelViewSet):
+    start_date = datetime.combine(timezone.now() + timedelta(days=1), time.min)
+    queryset = Tournament.objects.filter(starts_at__gte=start_date).all()
+    serializer_class = TournamentSerializer
+
+
 class PrizeViewSet(viewsets.ModelViewSet):
     queryset = Prize.objects.all()
     serializer_class = PrizeSerializer
@@ -29,4 +47,12 @@ class PrizeViewSet(viewsets.ModelViewSet):
 
 class PlayerViewSet(viewsets.ModelViewSet):
     queryset = Player.objects.all()
-    serializer_class = PlayerSerializer
+    serializer_class = CustomPlayerDetailsSerializer
+
+
+class BuyTicketView(APIViewMixin):
+    def get(self, request, id):
+        tournament = Tournament.objects.filter(id=id).first()
+        # if tournament:
+
+        return Response({'tickets': []})

@@ -70,7 +70,7 @@ REST_FRAMEWORK = {
 }
 
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'tournament.api.serializers.PlayerSerializer',
+    'USER_DETAILS_SERIALIZER': 'accounts.api.serializers.CustomPlayerDetailsSerializer',
 }
 
 # django-allauth settings
