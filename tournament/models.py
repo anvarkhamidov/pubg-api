@@ -34,7 +34,7 @@ class Tournament(models.Model):
     def save(self, *args, **kwargs):
         """Make a slug from Tournament.name"""
         self.slug = slugify(self.name)
-        self.starts_at = timezone.make_aware(self.starts_at)
+        # self.starts_at = timezone.make_aware(self.starts_at)
         super().save(*args, **kwargs)
 
     def __str__(self):
