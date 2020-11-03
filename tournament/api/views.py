@@ -1,7 +1,7 @@
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 
 from datetime import datetime, date, timedelta, time
 
@@ -51,8 +51,26 @@ class PlayerViewSet(viewsets.ModelViewSet):
 
 
 class BuyTicketView(APIViewMixin):
-    def get(self, request, id):
+    def post(self, request, id):
         tournament = Tournament.objects.filter(id=id).first()
-        # if tournament:
+        current_user = request.user
+        
+        if tournament:
+            tournament.players.add(current_user)
+            tournament.max_players -= 1
+            tournament.save()
+            tournament_serializer = TournamentSerializer(tournament, context={'request': request})
 
-        return Response({'tickets': []})
+            ticket = Ticket(player=current_user, tournament=tournament, cost=tournament.cost)
+            ticket.save()
+            ticket_serializer = TicketSerializer(ticket, context={'request': request})
+
+            data = {'tournament': tournament_serializer.data, 'ticket': ticket_serializer.data}
+            status = status.HTTP_200_OK
+        
+        else:
+            data = {'error': 'Wrong tournament ID.'}
+            status = status.HTTP_400_BAD_REQUEST
+
+        
+        return Response(data, status=status)
